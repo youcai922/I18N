@@ -1,8 +1,8 @@
 package com.cet.eem.config;
 
-//import com.cet.eem.common.model.Result;
-//import com.cet.eem.util.MessageUtil;
-//import com.cet.electric.authservice.common.entity.ApiResult;
+import com.cet.eem.entity.Result;
+import com.cet.eem.util.MessageUtil;
+import org.springframework.context.NoSuchMessageException;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.ServerHttpRequest;
@@ -29,14 +29,13 @@ public class MyResponseBodyAdvice implements ResponseBodyAdvice {
      */
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-//        if (body instanceof ApiResult && ((ApiResult<?>) body).getMsg() == null) {
-//            ((ApiResult<?>) body).setMsg(MessageUtil.getMessage(((ApiResult<?>) body).getCode().toString()));
-//            return body;
-//        } else if (body instanceof Result && ((Result<?>) body).getMsg() != null) {
-//            ((Result<?>) body).setMsg(MessageUtil.getMessage(((Result<?>) body).getMsg()));
-//        } else {
-//            return body;
-//        }
+        try {
+            if (body instanceof Result && ((Result<?>) body).getMsg() != null) {
+                ((Result<?>) body).setMsg(MessageUtil.getMessage(((Result<?>) body).getMsg()));
+            }
+        } catch (NoSuchMessageException exception) {
+            return body;
+        }
         return body;
     }
 }

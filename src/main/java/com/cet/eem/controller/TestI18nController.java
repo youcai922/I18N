@@ -1,5 +1,6 @@
 package com.cet.eem.controller;
 
+import com.cet.eem.entity.Result;
 import com.cet.eem.entity.VO.GasCompressorRealTimeDataVo;
 import com.cet.eem.enums.MessageEnum;
 import com.cet.eem.service.I18nService;
@@ -41,15 +42,13 @@ public class TestI18nController {
     }
 
     @GetMapping("/realtimedata2")
-    public GasCompressorRealTimeDataVo realtimedata2() {
+    public Result<GasCompressorRealTimeDataVo> realtimedata2() {
         GasCompressorRealTimeDataVo gasCompressorRealTimeDataVo = i18nService.realtimedata2();
-        return gasCompressorRealTimeDataVo;
-//        return Result.ok(gasCompressorRealTimeDataVo);
+        return Result.ok(gasCompressorRealTimeDataVo);
     }
 
     @GetMapping("/realtimedataList")
-    public String realtimedataList() {
-//        return Result.ok(i18nService.realtimedataList());
-        return i18nService.realtimedataList().toString();
+    public Result<List<GasCompressorRealTimeDataVo>> realtimedataList() {
+        return Result.ok(i18nService.realtimedataList());
     }
 }
